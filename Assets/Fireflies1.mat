@@ -21,15 +21,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Fireflies1
-  m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+  m_Shader: {fileID: 4800000, guid: e9ef6a2e182f596438c0505d00d4a2f1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - CURVEDWORLD_BEND_TYPE_CYLINDRICALROLLOFF_Z
+  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords:
+  - CURVEDWORLD_BEND_ID_1
   - _COLORADDSUBDIFF_ON
   - _DISTORTION_ON
   - _FLIPBOOKBLENDING_ON
-  - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -68,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -136,6 +138,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: -15
     - _ReceiveShadows: 1
+    - _SampleGI: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
@@ -152,6 +155,7 @@ Material:
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 0.82075465, g: 1, b: 0.9733358, a: 0.6313726}
+    - _CurvedWorldBendSettings: {r: 10, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 4, b: 1.7057085, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

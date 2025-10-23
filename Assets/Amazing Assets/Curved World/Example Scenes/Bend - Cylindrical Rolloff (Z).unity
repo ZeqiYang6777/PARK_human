@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11077,74 +11076,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1592105851}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &848308269
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 848308271}
-  - component: {fileID: 848308270}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &848308270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848308269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2651a4c7e50c3274bb02a1b6c03b054b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bendType: 10
-  bendID: 1
-  bendPivotPoint: {fileID: 517907154}
-  bendPivotPointPosition: {x: 0, y: 0, z: 0}
-  bendRotationCenter: {fileID: 0}
-  bendRotationCenterPosition: {x: 0, y: 0, z: 0}
-  bendRotationAxis: {x: 0, y: 0, z: 0}
-  bendRotationAxisType: 0
-  bendRotationCenter2: {fileID: 0}
-  bendRotationCenter2Position: {x: 0, y: 0, z: 0}
-  bendVerticalSize: 0
-  bendVerticalOffset: 0
-  bendHorizontalSize: 0
-  bendHorizontalOffset: 0
-  bendCurvatureSize: 9.94
-  bendCurvatureOffset: 0
-  bendAngle: 0
-  bendAngle2: 0
-  bendMinimumRadius: 0
-  bendMinimumRadius2: 0
-  bendRolloff: 0
-  disableInEditor: 0
-  manualUpdate: 0
-  isExpanded: 1
---- !u!4 &848308271
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 848308269}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &918212222
 GameObject:
   m_ObjectHideFlags: 0
@@ -11750,12 +11681,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &1325861979
 GameObject:
   m_ObjectHideFlags: 0
@@ -37417,5 +37348,4 @@ SceneRoots:
   - {fileID: 7068895595178025680}
   - {fileID: 1592010457}
   - {fileID: 517907154}
-  - {fileID: 848308271}
   - {fileID: 1376265552}
