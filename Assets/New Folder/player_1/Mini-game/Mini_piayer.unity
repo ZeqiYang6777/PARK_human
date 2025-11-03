@@ -10810,11 +10810,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1653540915}
   - component: {fileID: 1653540914}
-  - component: {fileID: 1653540913}
   - component: {fileID: 1653540912}
   - component: {fileID: 1653540911}
   - component: {fileID: 1653540910}
   - component: {fileID: 1653540909}
+  - component: {fileID: 1653540916}
   m_Layer: 9
   m_Name: Tank
   m_TagString: Untagged
@@ -11051,27 +11051,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!65 &1653540913
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1653540908}
-  m_Material: {fileID: 13400000, guid: 4ec067bbf4df4ef4aab2f6900016723b, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.5, y: 1.7, z: 1.6}
-  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!54 &1653540914
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11118,6 +11097,27 @@ Transform:
   - {fileID: 916881644}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -80.323, z: 0}
+--- !u!135 &1653540916
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653540908}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1657738666
 GameObject:
   m_ObjectHideFlags: 0

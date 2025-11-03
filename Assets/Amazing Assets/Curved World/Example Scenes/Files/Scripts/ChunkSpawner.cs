@@ -93,4 +93,5 @@ namespace AmazingAssets.CurvedWorld.Examples
             lastChunk.transform.position = newPos;
         }
     }
+
 }

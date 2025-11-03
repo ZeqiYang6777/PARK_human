@@ -7,6 +7,8 @@ TagManager:
   - TAZOFX
   - CinemachineTarget
   - Pipe
+  - Ground
+  - New tag
   layers:
   - Default
   - TransparentFX
