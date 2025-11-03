@@ -1,45 +1,38 @@
-// Curved World <http://u3d.as/1W8h>
-// Copyright (c) Amazing Assets <https://amazingassets.world>
- 
 using UnityEngine;
-
 
 namespace AmazingAssets.CurvedWorld.Examples
 {
     public class RunnerChunk : MonoBehaviour
     {
         public ChunkSpawner spawner;
-        
 
         void Update()
         {
+            if (spawner == null) return;
+
+            // 移动区块
             transform.Translate(spawner.moveDirection * spawner.movingSpeed * Time.deltaTime);
-        }
-        void FixedUpdate()
-        {
+
+            // 检查是否超出销毁范围
             switch (spawner.axis)
             {
                 case ChunkSpawner.Axis.XPositive:
-                    if (transform.position.x > spawner.destoryZone)
+                    if (transform.position.x > spawner.destroyZone)
                         spawner.DestroyChunk(this);
                     break;
-
                 case ChunkSpawner.Axis.XNegative:
-                    if (transform.position.x < -spawner.destoryZone)
+                    if (transform.position.x < -spawner.destroyZone)
                         spawner.DestroyChunk(this);
                     break;
-
                 case ChunkSpawner.Axis.ZPositive:
-                    if (transform.position.z > spawner.destoryZone)
+                    if (transform.position.z > spawner.destroyZone)
                         spawner.DestroyChunk(this);
                     break;
-
                 case ChunkSpawner.Axis.ZNegative:
-                    if (transform.position.z < -spawner.destoryZone)
+                    if (transform.position.z < -spawner.destroyZone)
                         spawner.DestroyChunk(this);
                     break;
             }
-            
         }
     }
 }

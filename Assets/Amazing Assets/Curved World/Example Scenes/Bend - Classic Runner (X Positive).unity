@@ -13605,7 +13605,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1143143735}
-  - component: {fileID: 1143143734}
+  - component: {fileID: 1143143736}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -13613,18 +13613,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1143143734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143143733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46370783c2e9240419d5e0af806434e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1143143735
 Transform:
   m_ObjectHideFlags: 0
@@ -13641,6 +13629,35 @@ Transform:
   - {fileID: 1988262755}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -2.291, z: 0}
+--- !u!114 &1143143736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143143733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d6c2d6b6fe2d7f4087cc33913b4784f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chunks: []
+  initialSpawnCount: 5
+  destroyZone: 300
+  axis: 0
+  moveDirection: {x: -1, y: 0, z: 0}
+  movingSpeed: 1
+  chunkSize: 60
+  obstaclePrefab: {fileID: 0}
+  collectiblePrefab: {fileID: 0}
+  obstacleSpawnChance: 0.3
+  collectibleSpawnChance: 0.5
+  obstaclesPerChunk: 2
+  collectiblesPerChunk: 3
+  currentCollectibles: 0
+  requiredCollectibles: 10
+  currentObstacleHits: 0
+  maxObstacleHits: 3
 --- !u!65 &1158875832
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19241,7 +19258,7 @@ GameObject:
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1439108163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19257,11 +19274,21 @@ MonoBehaviour:
   chunks:
   - {fileID: 1903349472}
   initialSpawnCount: 15
-  destoryZone: 348.9
+  destroyZone: 300
   axis: 1
   moveDirection: {x: -1, y: 0, z: 0}
   movingSpeed: 30
   chunkSize: 60
+  obstaclePrefab: {fileID: 0}
+  collectiblePrefab: {fileID: 0}
+  obstacleSpawnChance: 0.3
+  collectibleSpawnChance: 0.5
+  obstaclesPerChunk: 2
+  collectiblesPerChunk: 3
+  currentCollectibles: 0
+  requiredCollectibles: 10
+  currentObstacleHits: 0
+  maxObstacleHits: 3
 --- !u!4 &1439108164
 Transform:
   m_ObjectHideFlags: 0

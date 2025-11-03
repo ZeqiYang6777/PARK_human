@@ -1,22 +1,20 @@
-using AmazingAssets.CurvedWorld.Examples;
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    private ChunkSpawner spawner;
-
-    public void Initialize(ChunkSpawner spawner)
-    {
-        this.spawner = spawner;
-    }
+    public static System.Action OnItemCollected;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            spawner?.CollectItem();
+            // 触发收集事件
+            OnItemCollected?.Invoke();
+
+            // 播放收集效果
             GetComponent<Collider>().enabled = false;
             GetComponent<Renderer>().enabled = false;
+
             Destroy(gameObject, 1f);
         }
     }
