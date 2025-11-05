@@ -10,10 +10,9 @@ public class Obstacle : MonoBehaviour
     {
         this.spawner = spawner;
     }
-
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             spawner?.HitObstacle();
             StartCoroutine(FlashColor());
