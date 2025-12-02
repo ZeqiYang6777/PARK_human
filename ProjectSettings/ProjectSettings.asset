@@ -812,7 +812,9 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: USE_INPUT_SYSTEM
+    Standalone: USE_INPUT_SYSTEM;USE_NEW_INPUT
+    WebGL: USE_NEW_INPUT
+    Windows Store Apps: USE_NEW_INPUT
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
