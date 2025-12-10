@@ -9,11 +9,13 @@ TagManager:
   - Pipe
   - Ground
   - New tag
+  - Jewel
+  - Goal
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - GlowObj

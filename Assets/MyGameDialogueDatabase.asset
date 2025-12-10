@@ -100,7 +100,7 @@ MonoBehaviour:
   - id: 1
     fields:
     - title: Title
-      value: New Conversation 1
+      value: Zone1_Dialogue
       type: 0
       typeString: 
     - title: Description
@@ -256,7 +256,7 @@ MonoBehaviour:
   - id: 2
     fields:
     - title: Title
-      value: New Conversation 2
+      value: Zone2_Dialogue 1
       type: 0
       typeString: 
     - title: Description

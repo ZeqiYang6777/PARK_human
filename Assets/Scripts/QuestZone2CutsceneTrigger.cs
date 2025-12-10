@@ -1,85 +1,56 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Cinemachine;
-using System.Collections;
 using PixelCrushers.DialogueSystem;
 
 public class QuestZone2CutsceneTrigger : MonoBehaviour
 {
-    [Header("=== Cinemachine相机设置 ===")]
-    [Tooltip("镜头1的虚拟相机")]
-    public CinemachineVirtualCamera vcamShot1;
-
-    [Tooltip("镜头2的虚拟相机")]
-    public CinemachineVirtualCamera vcamShot2;
-
-    [Tooltip("镜头3的虚拟相机")]
-    public CinemachineVirtualCamera vcamShot3;
-
+    [Header("=== 相机设置 ===")]
     [Tooltip("玩家的虚拟相机")]
     public CinemachineVirtualCamera playerVirtualCamera;
 
-    [Header("=== 动画控制器 ===")]
-    [Tooltip("镜头1的Animator")]
-    public Animator shot1Animator;
+    [Tooltip("第一个镜头")]
+    public CinemachineVirtualCamera vcamShot1;
 
-    [Tooltip("镜头2的Animator")]
-    public Animator shot2Animator;
+    [Tooltip("第二个镜头")]
+    public CinemachineVirtualCamera vcamShot2;
 
-    [Tooltip("镜头3的Animator")]
-    public Animator shot3Animator;
+    [Tooltip("第三个镜头")]
+    public CinemachineVirtualCamera vcamShot3;
 
-    [Header("=== 镜头时长设置 ===")]
-    [Tooltip("镜头1显示时长（秒）")]
-    public float shot1Duration = 5f;
+    [Header("=== 时间设置 ===")]
+    [Tooltip("第一个镜头持续时间（秒）")]
+    public float shot1Duration = 2f;
 
-    [Tooltip("镜头2显示时长（秒）")]
-    public float shot2Duration = 5f;
+    [Tooltip("第二个镜头持续时间（秒）")]
+    public float shot2Duration = 3f;
 
-    [Tooltip("镜头3显示时长（秒）")]
-    public float shot3Duration = 5f;
+    [Tooltip("第三个镜头持续时间（秒）")]
+    public float shot3Duration = 2f;
 
-    [Header("=== 玩家控制 ===")]
-    [Tooltip("玩家对象")]
-    public GameObject player;
+    [Tooltip("相机切换混合时间（秒）")]
+    public float blendDuration = 1f;
 
-    [Tooltip("玩家移动脚本")]
-    public MonoBehaviour playerMovementScript;
+    [Header("=== 旁白设置 ===")]
+    [Tooltip("过场期间播放的对话名称（旁白2）")]
+    public string conversationDuringCutscene = "Zone1_Dialogue";
 
-    [Tooltip("玩家相机控制脚本")]
-    public MonoBehaviour playerCameraScript;
-
-    [Header("=== 任务系统设置 ===")]
+    [Header("=== 任务设置 ===")]
     [Tooltip("任务UI管理器")]
     public QuestUIManager questUIManager;
 
-    [Tooltip("过场后显示的任务索引（0-5对应任务1-6）")]
-    public int questIndexAfterCutscene = 1; // 注意：索引从0开始，1代表第2个任务
+    [Tooltip("过场结束后显示的任务索引")]
+    public int questIndexAfterCutscene = 1;
 
-    [Tooltip("过场后播放的对话")]
-    public string conversationAfterCutscene = "QuestZone2_Narration";
+    [Tooltip("是否自动打开任务面板")]
+    public bool autoOpenQuestPanel = true;
 
-    [Tooltip("✅ 等待旁白播放完才显示任务")]
-    public bool waitForNarrationBeforeQuest = true;
+    [Header("=== 玩家控制 ===")]
+    [Tooltip("玩家控制器（用于禁用输入）")]
+    public MonoBehaviour playerController;
 
-    [Tooltip("🎯 旁白后自动打开任务面板")]
-    public bool autoOpenQuestPanel = false;
-
-    [Header("=== 相机过渡设置 ===")]
-    [Tooltip("相机切换混合时长")]
-    public float blendDuration = 1f;
-
-    [Tooltip("使用平滑混合")]
-    public bool useSmoothBlend = true;
-
-    [Header("=== 其他设置 ===")]
-    [Tooltip("只触发一次")]
-    public bool triggerOnce = true;
-
-    [Tooltip("触发后禁用碰撞器")]
-    public bool disableColliderAfterTrigger = true;
-
-    [Tooltip("显示调试信息")]
-    public bool showDebugInfo = true;
+    [Tooltip("玩家移动脚本（用于禁用移动）")]
+    public MonoBehaviour playerMovement;
 
     [Header("=== 音效设置 ===")]
     [Tooltip("过场开始音效")]
@@ -88,158 +59,194 @@ public class QuestZone2CutsceneTrigger : MonoBehaviour
     [Tooltip("过场结束音效")]
     public AudioClip cutsceneEndSound;
 
-    [Tooltip("音效音量")]
-    [Range(0f, 1f)]
-    public float soundVolume = 1f;
+    [Tooltip("音效播放器")]
+    public AudioSource audioSource;
 
-    // 内部状态
+    [Header("=== 调试设置 ===")]
+    [Tooltip("显示详细调试信息")]
+    public bool showDebugInfo = true;
+
+    // 私有变量
     private bool hasTriggered = false;
     private bool isPlayingCutscene = false;
-    private int originalShot1Priority;
-    private int originalShot2Priority;
-    private int originalShot3Priority;
-    private int originalPlayerPriority;
-    private AudioSource audioSource;
 
     private void Start()
     {
-        // 验证所有必需的引用
-        if (!ValidateReferences())
-        {
-            enabled = false;
-            return;
-        }
-
-        // 添加AudioSource组件（如果需要）
-        if (cutsceneStartSound != null || cutsceneEndSound != null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.playOnAwake = false;
-            audioSource.volume = soundVolume;
-        }
-
-        // 保存所有相机的原始优先级
-        originalShot1Priority = vcamShot1.Priority;
-        originalShot2Priority = vcamShot2.Priority;
-        originalShot3Priority = vcamShot3.Priority;
-        originalPlayerPriority = playerVirtualCamera.Priority;
-
-        // 确保所有镜头相机初始优先级为0
-        vcamShot1.Priority = 0;
-        vcamShot2.Priority = 0;
-        vcamShot3.Priority = 0;
+        // 初始化：确保所有过场镜头优先级为0
+        if (vcamShot1 != null) vcamShot1.Priority = 0;
+        if (vcamShot2 != null) vcamShot2.Priority = 0;
+        if (vcamShot3 != null) vcamShot3.Priority = 0;
 
         // 确保玩家相机优先级最高
-        playerVirtualCamera.Priority = 10;
-
-        // 禁用所有Animator，等待触发时启用
-        if (shot1Animator != null) shot1Animator.enabled = false;
-        if (shot2Animator != null) shot2Animator.enabled = false;
-        if (shot3Animator != null) shot3Animator.enabled = false;
+        if (playerVirtualCamera != null)
+        {
+            playerVirtualCamera.Priority = 100;
+        }
 
         if (showDebugInfo)
         {
-            Debug.Log($"✅ [QuestZone_2] 初始化完成! 等待玩家触发...");
+            Debug.Log("✅ QuestZone2CutsceneTrigger 初始化完成");
         }
-    }
-
-    private bool ValidateReferences()
-    {
-        bool isValid = true;
-
-        if (vcamShot1 == null)
-        {
-            Debug.LogError("❌ 未设置镜头1的虚拟相机!", this);
-            isValid = false;
-        }
-
-        if (vcamShot2 == null)
-        {
-            Debug.LogError("❌ 未设置镜头2的虚拟相机!", this);
-            isValid = false;
-        }
-
-        if (vcamShot3 == null)
-        {
-            Debug.LogError("❌ 未设置镜头3的虚拟相机!", this);
-            isValid = false;
-        }
-
-        if (playerVirtualCamera == null)
-        {
-            Debug.LogError("❌ 未设置玩家的虚拟相机!", this);
-            isValid = false;
-        }
-
-        if (player == null)
-        {
-            Debug.LogError("❌ 未设置玩家对象!", this);
-            isValid = false;
-        }
-
-        if (questUIManager == null)
-        {
-            Debug.LogWarning("⚠️ 未设置QuestUIManager,将无法显示任务!", this);
-        }
-
-        return isValid;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // 检查是否是玩家进入
-        if (other.gameObject != player) return;
+        // 检查是否是玩家触发
+        if (other.CompareTag("Player") && !hasTriggered)
+        {
+            if (showDebugInfo)
+            {
+                Debug.Log("🎬 玩家进入触发区域，准备播放过场动画");
+            }
 
-        // 检查是否已经触发过
-        if (triggerOnce && hasTriggered) return;
-
-        // 检查是否正在播放过场
-        if (isPlayingCutscene) return;
-
-        // 标记已触发
-        hasTriggered = true;
-
-        // 开始播放过场动画
-        StartCoroutine(PlayCutscene());
+            hasTriggered = true;
+            StartCoroutine(PlayCutscene());
+        }
     }
 
     private IEnumerator PlayCutscene()
     {
+        if (isPlayingCutscene)
+        {
+            if (showDebugInfo)
+            {
+                Debug.Log("⚠️ 过场动画已在播放中，跳过");
+            }
+            yield break;
+        }
+
         isPlayingCutscene = true;
 
         if (showDebugInfo)
         {
-            Debug.Log("🎬 ========== [QuestZone_2] 过场动画开始 ==========");
+            Debug.Log("🎬 ========== 开始播放过场动画 ==========");
         }
 
-        // 播放开始音效
-        PlaySound(cutsceneStartSound);
-
-        // 禁用玩家控制
+        // ========== 禁用玩家控制 ==========
         DisablePlayerControl();
 
-        // ========== 播放镜头1 ==========
-        yield return StartCoroutine(PlayShot(vcamShot1, shot1Animator, shot1Duration, 1));
+        // ========== 播放开始音效 ==========
+        PlaySound(cutsceneStartSound);
 
-        // ========== 播放镜头2 ==========
-        yield return StartCoroutine(PlayShot(vcamShot2, shot2Animator, shot2Duration, 2));
+        // ========== 🆕 立即播放旁白（与画面同时播放） ==========
+        if (!string.IsNullOrEmpty(conversationDuringCutscene))
+        {
+            if (showDebugInfo)
+            {
+                Debug.Log($"💬 [旁白2] 开始播放: {conversationDuringCutscene}");
+            }
 
-        // ========== 播放镜头3 ==========
-        yield return StartCoroutine(PlayShot(vcamShot3, shot3Animator, shot3Duration, 3));
+            DialogueManager.StartConversation(conversationDuringCutscene);
+        }
+        else
+        {
+            if (showDebugInfo)
+            {
+                Debug.Log("ℹ️ [旁白2] 未设置旁白对话");
+            }
+        }
 
-        // ========== 所有镜头播放完毕,切回玩家相机 ==========
+        // ========== 播放三个镜头（旁白会在背景中播放） ==========
+
+        // 镜头1
+        if (vcamShot1 != null)
+        {
+            if (showDebugInfo)
+            {
+                Debug.Log($"📹 切换到镜头1，持续 {shot1Duration} 秒");
+            }
+
+            vcamShot1.Priority = 200;
+            yield return new WaitForSeconds(shot1Duration);
+            vcamShot1.Priority = 0;
+
+            if (showDebugInfo)
+            {
+                Debug.Log("✅ 镜头1 播放完毕");
+            }
+        }
+
+        // 镜头2
+        if (vcamShot2 != null)
+        {
+            if (showDebugInfo)
+            {
+                Debug.Log($"📹 切换到镜头2，持续 {shot2Duration} 秒");
+            }
+
+            vcamShot2.Priority = 200;
+            yield return new WaitForSeconds(shot2Duration);
+            vcamShot2.Priority = 0;
+
+            if (showDebugInfo)
+            {
+                Debug.Log("✅ 镜头2 播放完毕");
+            }
+        }
+
+        // 镜头3
+        if (vcamShot3 != null)
+        {
+            if (showDebugInfo)
+            {
+                Debug.Log($"📹 切换到镜头3，持续 {shot3Duration} 秒");
+            }
+
+            vcamShot3.Priority = 200;
+            yield return new WaitForSeconds(shot3Duration);
+            vcamShot3.Priority = 0;
+
+            if (showDebugInfo)
+            {
+                Debug.Log("✅ 镜头3 播放完毕");
+            }
+        }
+
+        // ========== 所有镜头播放完毕 ==========
         if (showDebugInfo)
         {
             Debug.Log("✅ 所有镜头播放完毕,准备切回玩家相机");
         }
 
-        // 降低所有镜头相机优先级
-        vcamShot1.Priority = 0;
-        vcamShot2.Priority = 0;
-        vcamShot3.Priority = 0;
+        // ========== 等待旁白播放完毕（如果还在播放） ==========
+        if (!string.IsNullOrEmpty(conversationDuringCutscene))
+        {
+            float timeout = 10f;
+            float elapsed = 0f;
 
-        // 提高玩家相机优先级
-        playerVirtualCamera.Priority = 100;
+            while (DialogueManager.isConversationActive && elapsed < timeout)
+            {
+                if (showDebugInfo)
+                {
+                    Debug.Log($"⏳ [旁白2] 等待对话播放完成... ({elapsed:F1}秒)");
+                }
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            if (elapsed >= timeout)
+            {
+                if (showDebugInfo)
+                {
+                    Debug.LogWarning("⚠️ [旁白2] 等待超时，强制继续");
+                }
+            }
+            else if (showDebugInfo)
+            {
+                Debug.Log($"✅ [旁白2] 对话播放完成");
+            }
+        }
+
+        // ========== 切回玩家相机 ==========
+        if (vcamShot1 != null) vcamShot1.Priority = 0;
+        if (vcamShot2 != null) vcamShot2.Priority = 0;
+        if (vcamShot3 != null) vcamShot3.Priority = 0;
+
+        if (playerVirtualCamera != null)
+        {
+            playerVirtualCamera.Priority = 100;
+        }
 
         // 等待相机混合完成
         yield return new WaitForSeconds(blendDuration);
@@ -255,55 +262,24 @@ public class QuestZone2CutsceneTrigger : MonoBehaviour
             Debug.Log("✅ 过场结束,恢复游戏控制");
         }
 
-        // ========== 现在才播放旁白! ==========
-        if (!string.IsNullOrEmpty(conversationAfterCutscene))
+        // ========== 显示任务 ==========
+        if (questUIManager != null)
         {
             if (showDebugInfo)
             {
-                Debug.Log($"💬 准备播放旁白: {conversationAfterCutscene}");
+                Debug.Log($"📋 更新任务图片为索引: {questIndexAfterCutscene}");
             }
 
-            // 播放旁白对话
-            DialogueManager.StartConversation(conversationAfterCutscene);
-
-            // 如果需要等待旁白播放完
-            if (waitForNarrationBeforeQuest)
-            {
-                if (showDebugInfo)
-                {
-                    Debug.Log("⏳ 等待旁白播放完成...");
-                }
-
-                // 等待对话系统完成
-                while (DialogueManager.isConversationActive)
-                {
-                    yield return null;
-                }
-
-                if (showDebugInfo)
-                {
-                    Debug.Log("✅ 旁白播放完成");
-                }
-            }
-        }
-
-        // ========== 显示任务（使用正确的方法） ==========
-        if (questUIManager != null)
-        {
-            // ✅ 方案1：只更新任务图片（推荐）
             questUIManager.UpdateQuestImage(questIndexAfterCutscene);
 
             if (showDebugInfo)
             {
-                Debug.Log($"✅ 已更新任务图片为索引: {questIndexAfterCutscene}（任务 {questIndexAfterCutscene + 1}）");
+                Debug.Log($"✅ 已更新任务图片（任务 {questIndexAfterCutscene + 1}）");
             }
 
-            // ✅ 方案2：如果想自动打开任务面板（可选）
             if (autoOpenQuestPanel)
             {
-                // 等待一小段时间，让玩家准备好
                 yield return new WaitForSeconds(0.5f);
-
                 questUIManager.OpenQuestPanel();
 
                 if (showDebugInfo)
@@ -311,172 +287,114 @@ public class QuestZone2CutsceneTrigger : MonoBehaviour
                     Debug.Log("📋 已自动打开任务面板");
                 }
             }
-            else
-            {
-                if (showDebugInfo)
-                {
-                    Debug.Log("💡 提示：按M键打开任务面板查看新任务");
-                }
-            }
         }
 
-        // 禁用碰撞器（如果设置了）
-        if (disableColliderAfterTrigger)
+        if (showDebugInfo)
         {
-            Collider col = GetComponent<Collider>();
-            if (col != null)
-            {
-                col.enabled = false;
-                if (showDebugInfo)
-                {
-                    Debug.Log("🚫 已禁用触发器碰撞器");
-                }
-            }
+            Debug.Log("🏁 ========== 过场动画完成 ==========");
         }
 
         isPlayingCutscene = false;
-
-        if (showDebugInfo)
-        {
-            Debug.Log("🎬 ========== [QuestZone_2] 完整流程结束 ==========");
-        }
     }
 
-    private IEnumerator PlayShot(CinemachineVirtualCamera vcam, Animator animator, float duration, int shotNumber)
-    {
-        if (showDebugInfo)
-        {
-            Debug.Log($"🎥 播放镜头{shotNumber}");
-        }
-
-        // 降低其他所有相机的优先级
-        vcamShot1.Priority = 0;
-        vcamShot2.Priority = 0;
-        vcamShot3.Priority = 0;
-        playerVirtualCamera.Priority = 0;
-
-        // 提高当前镜头相机的优先级
-        vcam.Priority = 100;
-
-        if (showDebugInfo)
-        {
-            Debug.Log($"📷 已激活相机: {vcam.name}, Priority={vcam.Priority}");
-        }
-
-        // 等待混合完成
-        yield return new WaitForSeconds(blendDuration);
-
-        // 启用并播放动画
-        if (animator != null)
-        {
-            animator.enabled = true;
-            animator.Play(0);
-
-            if (showDebugInfo)
-            {
-                Debug.Log($"🎬 镜头{shotNumber}动画开始播放");
-            }
-        }
-
-        // 等待镜头时长
-        yield return new WaitForSeconds(duration);
-
-        // 停止动画
-        if (animator != null)
-        {
-            animator.enabled = false;
-
-            if (showDebugInfo)
-            {
-                Debug.Log($"⏸️ 镜头{shotNumber}动画停止");
-            }
-        }
-    }
+    // ========== 辅助方法 ==========
 
     private void DisablePlayerControl()
     {
-        // 禁用玩家移动脚本
-        if (playerMovementScript != null)
+        if (playerController != null)
         {
-            playerMovementScript.enabled = false;
-            if (showDebugInfo) Debug.Log("🚫 已禁用玩家移动");
+            playerController.enabled = false;
+            if (showDebugInfo)
+            {
+                Debug.Log("🚫 已禁用玩家控制器");
+            }
         }
 
-        // 禁用玩家相机控制脚本
-        if (playerCameraScript != null)
+        if (playerMovement != null)
         {
-            playerCameraScript.enabled = false;
-            if (showDebugInfo) Debug.Log("🚫 已禁用玩家相机控制");
+            playerMovement.enabled = false;
+            if (showDebugInfo)
+            {
+                Debug.Log("🚫 已禁用玩家移动");
+            }
         }
     }
 
     private void EnablePlayerControl()
     {
-        // 启用玩家移动脚本
-        if (playerMovementScript != null)
+        if (playerController != null)
         {
-            playerMovementScript.enabled = true;
-            if (showDebugInfo) Debug.Log("✅ 已启用玩家移动");
+            playerController.enabled = true;
+            if (showDebugInfo)
+            {
+                Debug.Log("✅ 已启用玩家控制器");
+            }
         }
 
-        // 启用玩家相机控制脚本
-        if (playerCameraScript != null)
+        if (playerMovement != null)
         {
-            playerCameraScript.enabled = true;
-            if (showDebugInfo) Debug.Log("✅ 已启用玩家相机控制");
+            playerMovement.enabled = true;
+            if (showDebugInfo)
+            {
+                Debug.Log("✅ 已启用玩家移动");
+            }
         }
     }
 
     private void PlaySound(AudioClip clip)
     {
-        if (clip != null && audioSource != null)
+        if (audioSource != null && clip != null)
         {
-            audioSource.PlayOneShot(clip, soundVolume);
+            audioSource.PlayOneShot(clip);
+            if (showDebugInfo)
+            {
+                Debug.Log($"🔊 播放音效: {clip.name}");
+            }
         }
     }
 
-    [ContextMenu("▶️ 测试播放完整流程")]
-    private void TestPlayCutscene()
+    // ========== 调试工具方法 ==========
+
+    [ContextMenu("🎤 测试播放旁白")]
+    private void TestPlayNarration()
     {
         if (!Application.isPlaying)
         {
-            Debug.LogWarning("⚠️ 请在Play模式下测试!");
+            Debug.LogWarning("⚠️ 请在 Play 模式下测试！");
             return;
         }
 
-        if (isPlayingCutscene)
+        if (string.IsNullOrEmpty(conversationDuringCutscene))
         {
-            Debug.LogWarning("⚠️ 过场动画正在播放中!");
+            Debug.LogError("❌ conversationDuringCutscene 未设置！");
             return;
         }
 
-        StartCoroutine(PlayCutscene());
+        Debug.Log($"🎤 测试播放旁白: {conversationDuringCutscene}");
+        DialogueManager.StartConversation(conversationDuringCutscene);
     }
 
-    [ContextMenu("🔄 完全重置")]
-    private void CompleteReset()
+    [ContextMenu("🎬 重置触发器")]
+    private void ResetTrigger()
     {
-        if (!Application.isPlaying) return;
-
-        StopAllCoroutines();
-
-        vcamShot1.Priority = originalShot1Priority;
-        vcamShot2.Priority = originalShot2Priority;
-        vcamShot3.Priority = originalShot3Priority;
-        playerVirtualCamera.Priority = originalPlayerPriority;
-
-        if (shot1Animator != null) shot1Animator.enabled = false;
-        if (shot2Animator != null) shot2Animator.enabled = false;
-        if (shot3Animator != null) shot3Animator.enabled = false;
-
-        EnablePlayerControl();
-
         hasTriggered = false;
         isPlayingCutscene = false;
+        Debug.Log("✅ 触发器已重置，可以重新触发过场动画");
+    }
 
-        Collider col = GetComponent<Collider>();
-        if (col != null) col.enabled = true;
+    [ContextMenu("📋 列出所有对话")]
+    private void ListAllConversations()
+    {
+        if (DialogueManager.masterDatabase == null)
+        {
+            Debug.LogError("❌ Dialogue Database 未加载！");
+            return;
+        }
 
-        Debug.Log("🔄 已完全重置,可以重新测试!");
+        Debug.Log("📋 数据库中的所有对话：");
+        foreach (var conv in DialogueManager.masterDatabase.conversations)
+        {
+            Debug.Log($"  ✓ {conv.Title}");
+        }
     }
 }
