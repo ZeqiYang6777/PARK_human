@@ -180187,9 +180187,6 @@ GameObject:
   - component: {fileID: 1588821428}
   - component: {fileID: 1588821427}
   - component: {fileID: 1588821431}
-  - component: {fileID: 1588821433}
-  - component: {fileID: 1588821432}
-  - component: {fileID: 1588821434}
   - component: {fileID: 1588821435}
   m_Layer: 0
   m_Name: QuestZone_2
@@ -180296,55 +180293,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f445f2232b04fc428528a00df91334d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questUIManager: {fileID: 0}
+  questUIManager: {fileID: 1706625868}
   targetQuestIndex: 1
   interactKey: 101
   interactHint: {fileID: 0}
   showDebugInfo: 1
---- !u!114 &1588821432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588821426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201dc9b043283a84b84f226ad261f03d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSystem: {fileID: 1599165063}
-  triggerDialogue: {fileID: 11400000, guid: 11a0ecd73df07c045baa485db24aa2a3, type: 2}
-  questSystem: {fileID: 1706625868}
-  targetQuestIndex: 1
-  delayBeforeDialogue: 0.3
-  showDebugInfo: 1
-  hasTriggered: 0
-  isDialoguePlaying: 0
---- !u!114 &1588821433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588821426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dff094b9d31cc4459509ae40d7071bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1588821434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588821426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2639faa3ac98c0844b659a35e374ea32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1588821435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180357,32 +180310,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70fd9d6817f6ae4fb032c577f3dbf86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerVirtualCamera: {fileID: 256648247}
   vcamShot1: {fileID: 2058824834}
   vcamShot2: {fileID: 1108958150}
   vcamShot3: {fileID: 676906151}
-  playerVirtualCamera: {fileID: 256648247}
-  shot1Animator: {fileID: 2058824833}
-  shot2Animator: {fileID: 1108958149}
-  shot3Animator: {fileID: 676906153}
   shot1Duration: 3
   shot2Duration: 3
   shot3Duration: 3
-  player: {fileID: 503241305}
-  playerMovementScript: {fileID: 503241307}
-  playerCameraScript: {fileID: 256648247}
+  blendDuration: 1.5
+  conversationDuringCutscene: Zone1_Dialogue
   questUIManager: {fileID: 1706625868}
   questIndexAfterCutscene: 3
-  conversationAfterCutscene: QuestZone2_Narration
-  waitForNarrationBeforeQuest: 1
   autoOpenQuestPanel: 1
-  blendDuration: 1.5
-  useSmoothBlend: 1
-  triggerOnce: 1
-  disableColliderAfterTrigger: 1
-  showDebugInfo: 1
+  playerController: {fileID: 0}
+  playerMovement: {fileID: 0}
   cutsceneStartSound: {fileID: 0}
   cutsceneEndSound: {fileID: 0}
-  soundVolume: 0.7
+  audioSource: {fileID: 0}
+  showDebugInfo: 1
 --- !u!1001 &1590571926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -181507,52 +181452,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 1612764236}
-  narrationText: {fileID: 1744850703}
-  continueIndicator: {fileID: 1330876796}
-  dialogueData: {fileID: 11400000, guid: 6204441b89d3147448c486334aa8962e, type: 2}
-  nextDialogueKey: 32
-  skipAllKey: 27
+  speakerNameText: {fileID: 1086369170}
+  dialogueText: {fileID: 1162051036}
+  nextButton: {fileID: 0}
+  currentDialogue: {fileID: 0}
   useTypewriterEffect: 1
-  typeSpeed: 0.05
-  typeSound: {fileID: 8300000, guid: 3f422aad134ac5542a4860dba28110f4, type: 3}
-  typeSoundVolume: 0.3
-  soundEveryNChars: 2
-  transitionType: 2
-  transitionInDuration: 0.6
-  transitionOutDuration: 0.4
-  transitionCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  startScale: {x: 0.8, y: 0.8, z: 1}
-  targetScale: {x: 1, y: 1, z: 1}
-  useSlideIn: 0
-  slideOffset: {x: 0, y: -100}
-  playOnStart: 1
-  autoAdvance: 0
-  autoAdvanceDelay: 2
-  questUIManager: {fileID: 1706625868}
-  initialQuestIndex: 0
+  typewriterSpeed: 0.05
 --- !u!4 &1599165064
 Transform:
   m_ObjectHideFlags: 0
@@ -198432,9 +198337,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0b3d4040f547c9342afcccd518246fe3, type: 3}
   - {fileID: 21300000, guid: 2faeee709553868419bab1de021f8533, type: 3}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   toggleKey: 109
   animationType: 5
   fadeInDuration: 0.8
@@ -202766,7 +202668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1744850701
 RectTransform:
   m_ObjectHideFlags: 0
