@@ -27359,6 +27359,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall_070
       objectReference: {fileID: 0}
+    - target: {fileID: 8112740527230959005, guid: 45f95c6507647f24b8bebc89246162d9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8925551902187611943, guid: 45f95c6507647f24b8bebc89246162d9,
         type: 3}
       propertyPath: m_RootOrder
@@ -53943,7 +53948,7 @@ MonoBehaviour:
   GroundedRadius: 0.5
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   CinemachineCameraTarget: {fileID: 1480939673}
   TopClamp: 90
   BottomClamp: -90
