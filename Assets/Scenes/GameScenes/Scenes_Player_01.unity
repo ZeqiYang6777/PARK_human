@@ -53756,6 +53756,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 350.275
       objectReference: {fileID: 0}
+    - target: {fileID: 5393215578589016642, guid: 86170ffd0b35df7439fa3e9921de79db,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5393215578589016655, guid: 86170ffd0b35df7439fa3e9921de79db,
         type: 3}
       propertyPath: m_Enabled
@@ -53771,6 +53776,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerCapsule
+      objectReference: {fileID: 0}
+    - target: {fileID: 8616685848737228372, guid: 86170ffd0b35df7439fa3e9921de79db,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228372, guid: 86170ffd0b35df7439fa3e9921de79db,
         type: 3}
