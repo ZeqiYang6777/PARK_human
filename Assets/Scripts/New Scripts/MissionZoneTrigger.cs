@@ -11,7 +11,7 @@ public class MissionZoneTrigger : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Debug.Log("★ 进入区域");
+            Debug.Log(" 进入区域");
             triggered = true;
 
             if (GameFlowController.Instance)
