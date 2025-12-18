@@ -84295,7 +84295,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 431.1, y: 242.1, z: 214.8}
-  m_Center: {x: -108.8, y: 1.4, z: -40}
+  m_Center: {x: 62.8, y: 15.3, z: 28.1}
 --- !u!114 &781723384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174855,6 +174855,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ground3 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 429ebc9d2a515734aaeb6e5b491b73fb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -203715,6 +203720,7 @@ MonoBehaviour:
     animator: {fileID: 25384914}
     animationTrigger: Play
     duration: 5
+    playOnlyWhenActive: 1
     forceStopAnimation: 1
     idleStateName: Idle
   - shotName: "\u955C\u5934"
@@ -203722,6 +203728,7 @@ MonoBehaviour:
     animator: {fileID: 1902734755}
     animationTrigger: Play
     duration: 5
+    playOnlyWhenActive: 1
     forceStopAnimation: 1
     idleStateName: Idle
   - shotName: "\u955C\u5934"
@@ -203729,11 +203736,14 @@ MonoBehaviour:
     animator: {fileID: 1662771297}
     animationTrigger: Play
     duration: 5
+    playOnlyWhenActive: 1
     forceStopAnimation: 1
     idleStateName: Idle
   playerCamera: {fileID: 256648247}
   cinematicPriority: 20
   playerCameraPriority: 10
+  blendTime: 1
+  waitForBlendBeforeAnimation: 1
   showDebugLog: 1
   pauseBetweenShots: 0
   pauseDuration: 0.5
