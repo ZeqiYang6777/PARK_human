@@ -75248,7 +75248,7 @@ Transform:
   m_GameObject: {fileID: 697002541}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 159, y: -13, z: -171}
+  m_LocalPosition: {x: -3, y: -6, z: -171}
   m_LocalScale: {x: 10.191713, y: 1, z: 29.050188}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -168906,37 +168906,37 @@ PrefabInstance:
     - target: {fileID: 9005220659476430818, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -128.63704
+      value: -0.000000035951366
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 38.793762
+      value: 1.375
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 93.27159
+      value: 0.000000022173397
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.960549
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.111152284
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.25324306
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.02930465
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
@@ -168956,7 +168956,7 @@ PrefabInstance:
     - target: {fileID: 9005220659476430821, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: field of view
-      value: 81.3
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430821, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
@@ -169001,6 +169001,11 @@ PrefabInstance:
     - target: {fileID: 9005220659476430823, guid: de7ccf6a0e661cb43bd966d8799c202e,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9018249871969862650, guid: de7ccf6a0e661cb43bd966d8799c202e,
+        type: 3}
+      propertyPath: m_DefaultBlend.m_Time
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -171083,7 +171088,7 @@ PrefabInstance:
     - target: {fileID: 8762286023885395077, guid: b22843a783d43594680f3523b0c17325,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8762286023885395322, guid: b22843a783d43594680f3523b0c17325,
         type: 3}
@@ -203799,27 +203804,48 @@ MonoBehaviour:
     camera: {fileID: 25384912}
     animator: {fileID: 0}
     animationTrigger: Play
-    duration: 5
-    forceStopAnimation: 1
+    duration: 4
+    playOnlyWhenActive: 1
+    forceStopAnimation: 0
     idleStateName: Idle
   - shotName: "\u955C\u5934"
     camera: {fileID: 1902734754}
     animator: {fileID: 0}
     animationTrigger: Play
-    duration: 5
-    forceStopAnimation: 1
+    duration: 4
+    playOnlyWhenActive: 1
+    forceStopAnimation: 0
     idleStateName: Idle
   - shotName: "\u955C\u5934"
     camera: {fileID: 1662771296}
     animator: {fileID: 0}
     animationTrigger: Play
-    duration: 5
-    forceStopAnimation: 1
+    duration: 4
+    playOnlyWhenActive: 1
+    forceStopAnimation: 0
+    idleStateName: Idle
+  - shotName: "\u955C\u5934"
+    camera: {fileID: 898470672}
+    animator: {fileID: 0}
+    animationTrigger: Play
+    duration: 4
+    playOnlyWhenActive: 1
+    forceStopAnimation: 0
+    idleStateName: Idle
+  - shotName: "\u955C\u5934"
+    camera: {fileID: 1883975802}
+    animator: {fileID: 0}
+    animationTrigger: Play
+    duration: 4
+    playOnlyWhenActive: 1
+    forceStopAnimation: 0
     idleStateName: Idle
   playerCamera: {fileID: 256648247}
   cinematicPriority: 20
   playerCameraPriority: 10
-  showDebugLog: 1
+  blendTime: 1
+  waitForBlendBeforeAnimation: 1
+  showDebugLog: 0
   pauseBetweenShots: 0
   pauseDuration: 0.5
 --- !u!1001 &1802210012
