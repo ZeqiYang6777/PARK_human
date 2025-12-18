@@ -9,14 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2cfcfd283d738e42a3c394052d59f4f, type: 3}
+  m_Script: {fileID: 0}
   m_Name: Dialogue2
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   lines:
   - content: Currently, the entertainment facilities at "Park" have stopped working.
     duration: 3
   - content: '"All the entertainment facilities in ''Park'' have ceased operation
-      due to the temporary shutdown of its core ''Heart''."'
+      due to the temporary shutdown of its core ''Heart''."
+
+'
     duration: 3
   - content: Proceed to the core "Heart" to initiate a restart.
     duration: 3

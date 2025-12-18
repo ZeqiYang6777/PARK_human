@@ -11,6 +11,7 @@ TagManager:
   - New tag
   - Jewel
   - Goal
+  - Coin
   layers:
   - Default
   - TransparentFX
