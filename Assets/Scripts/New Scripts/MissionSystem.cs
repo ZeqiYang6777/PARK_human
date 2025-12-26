@@ -24,7 +24,7 @@ public class MissionSystem : MonoBehaviour
     public void SetCurrentMission(MissionData mission)
     {
         currentMission = mission;
-        Debug.Log($"任务更新: {mission.missionTitle}");
+        Debug.Log("[Mission System] Mission updated: " + mission.missionTitle);
 
         OnMissionChanged?.Invoke(mission);
     }

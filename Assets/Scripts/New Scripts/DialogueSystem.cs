@@ -5,63 +5,63 @@ using System.Collections;
 
 public class DialogueSystem : MonoBehaviour
 {
-    [Header("=== UI 引用 ===")]
+    [Header("=== UI References ===")]
     public GameObject dialoguePanel;
     public TextMeshProUGUI dialogueText;
-    public GameObject continuePrompt;           // "点击继续" 提示（可选）
+    public GameObject continuePrompt;
 
-    [Header("=== 打字机效果设置 ===")]
-    [Tooltip("是否启用打字机效果")]
+    [Header("=== Typewriter Effect Settings ===")]
+    [Tooltip("Enable typewriter effect")]
     public bool useTypewriterEffect = true;
 
-    [Tooltip("打字速度（秒/字符）")]
+    [Tooltip("Typing speed (seconds per character)")]
     [Range(0.01f, 0.2f)]
     public float typeSpeed = 0.05f;
 
-    [Tooltip("标点符号的额外停顿时间")]
+    [Tooltip("Extra pause time for punctuation")]
     [Range(0f, 0.5f)]
     public float punctuationPause = 0.15f;
 
-    [Tooltip("遇到这些标点符号时会额外停顿")]
+    [Tooltip("Punctuation marks that trigger extra pause")]
     public string punctuationMarks = "。！？，；：…";
 
-    [Header("=== 音效设置 ===")]
-    [Tooltip("打字音效音源")]
+    [Header("=== Audio Settings ===")]
+    [Tooltip("Audio source for typing sound")]
     public AudioSource typeSoundSource;
 
-    [Tooltip("配音音源")]
+    [Tooltip("Audio source for voice")]
     public AudioSource voiceSource;
 
-    [Tooltip("背景音乐音源")]
+    [Tooltip("Audio source for background music")]
     public AudioSource musicSource;
 
-    [Header("打字音效")]
-    [Tooltip("默认打字音效")]
+    [Header("Typing Sound Effects")]
+    [Tooltip("Default typing sound effect")]
     public AudioClip defaultTypeSound;
 
-    [Tooltip("打字音效音量")]
+    [Tooltip("Typing sound volume")]
     [Range(0f, 1f)]
     public float typeSoundVolume = 0.3f;
 
-    [Tooltip("打字音效音调随机范围")]
+    [Tooltip("Random pitch variation range")]
     [Range(0f, 0.5f)]
     public float pitchVariation = 0.1f;
 
-    [Tooltip("每隔几个字符播放一次打字音（1=每个字，2=每两个字）")]
+    [Tooltip("Play typing sound every N characters (1=every char, 2=every 2 chars)")]
     [Range(1, 5)]
     public int soundFrequency = 1;
 
-    [Header("特殊音效")]
-    [Tooltip("对话开始音效")]
+    [Header("Special Sound Effects")]
+    [Tooltip("Dialogue start sound effect")]
     public AudioClip dialogueStartSound;
 
-    [Tooltip("对话结束音效")]
+    [Tooltip("Dialogue end sound effect")]
     public AudioClip dialogueEndSound;
 
-    [Header("=== 调试选项 ===")]
+    [Header("=== Debug Options ===")]
     public bool showDebugLog = false;
 
-    // 私有变量
+    // Private variables
     private DialogueData currentDialogue;
     private int currentLineIndex = 0;
     private Action onCompleteCallback;
@@ -78,7 +78,7 @@ public class DialogueSystem : MonoBehaviour
         if (continuePrompt != null)
             continuePrompt.SetActive(false);
 
-        // 初始化音源
+        // Initialize audio sources
         InitializeAudioSources();
     }
 
@@ -86,29 +86,25 @@ public class DialogueSystem : MonoBehaviour
     {
         if (dialoguePanel != null && dialoguePanel.activeSelf && canProceed)
         {
-            // 空格键或鼠标左键继续
+            // Space key or left mouse button to continue
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
                 if (isTyping)
                 {
-                    // 跳过打字效果
+                    // Skip typing effect
                     CompleteTyping();
                 }
                 else
                 {
-                    // 下一句
+                    // Next line
                     ShowNextLine();
                 }
             }
         }
     }
 
-    /// <summary>
-    /// 初始化音频源
-    /// </summary>
     void InitializeAudioSources()
     {
-        // 如果没有手动指定音源，自动创建
         if (typeSoundSource == null)
         {
             GameObject soundObj = new GameObject("TypeSoundSource");
@@ -135,20 +131,17 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 开始对话
-    /// </summary>
     public void StartDialogue(DialogueData dialogue, Action onComplete = null)
     {
         if (dialogue == null)
         {
-            Debug.LogError("[DialogueSystem] DialogueData 为空！");
+            Debug.LogError("[DialogueSystem] DialogueData is null!");
             return;
         }
 
         if (dialogue.lines == null || dialogue.lines.Length == 0)
         {
-            Debug.LogError("[DialogueSystem] 对话数据没有任何行！");
+            Debug.LogError("[DialogueSystem] Dialogue data has no lines!");
             return;
         }
 
@@ -160,10 +153,10 @@ public class DialogueSystem : MonoBehaviour
         if (dialoguePanel != null)
             dialoguePanel.SetActive(true);
 
-        // 播放对话开始音效
+        // Play dialogue start sound
         PlaySound(dialogueStartSound, typeSoundSource);
 
-        // 播放背景音乐
+        // Play background music
         if (dialogue.backgroundMusic != null && musicSource != null)
         {
             musicSource.clip = dialogue.backgroundMusic;
@@ -172,14 +165,11 @@ public class DialogueSystem : MonoBehaviour
         }
 
         if (showDebugLog)
-            Debug.Log($"[DialogueSystem] 开始对话: {dialogue.dialogueID}");
+            Debug.Log("[DialogueSystem] Starting dialogue: " + dialogue.dialogueID);
 
         ShowCurrentLine();
     }
 
-    /// <summary>
-    /// 显示当前行
-    /// </summary>
     void ShowCurrentLine()
     {
         if (currentLineIndex >= currentDialogue.lines.Length)
@@ -191,13 +181,17 @@ public class DialogueSystem : MonoBehaviour
         var line = currentDialogue.lines[currentLineIndex];
 
         if (showDebugLog)
-            Debug.Log($"[DialogueSystem] 第 {currentLineIndex + 1} 句: {line.content.Substring(0, Mathf.Min(20, line.content.Length))}...");
+        {
+            int previewLength = Mathf.Min(20, line.content.Length);
+            string preview = line.content.Substring(0, previewLength);
+            Debug.Log("[DialogueSystem] Line " + (currentLineIndex + 1) + ": " + preview + "...");
+        }
 
-        // 停止之前的配音
+        // Stop previous voice
         if (voiceSource != null && voiceSource.isPlaying)
             voiceSource.Stop();
 
-        // 播放配音
+        // Play voice clip
         if (line.voiceClip != null && voiceSource != null)
         {
             voiceSource.clip = line.voiceClip;
@@ -205,13 +199,12 @@ public class DialogueSystem : MonoBehaviour
             voiceSource.Play();
         }
 
-        // 显示文本
+        // Display text
         if (useTypewriterEffect)
         {
             if (typeCoroutine != null)
                 StopCoroutine(typeCoroutine);
 
-            // 使用自定义打字速度或全局速度
             float speed = line.customTypeSpeed > 0 ? line.customTypeSpeed : typeSpeed;
             AudioClip typeSound = line.customTypeSound != null ? line.customTypeSound : defaultTypeSound;
 
@@ -219,7 +212,7 @@ public class DialogueSystem : MonoBehaviour
         }
         else
         {
-            // 直接显示
+            // Display immediately
             if (dialogueText != null)
                 dialogueText.text = line.content;
 
@@ -228,9 +221,6 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 打字机效果协程（增强版）
-    /// </summary>
     IEnumerator TypewriterEffect(string text, float speed, AudioClip typeSound)
     {
         isTyping = true;
@@ -241,7 +231,7 @@ public class DialogueSystem : MonoBehaviour
 
         ShowContinuePrompt(false);
 
-        // 逐字显示
+        // Display character by character
         foreach (char c in text)
         {
             if (dialogueText != null)
@@ -249,16 +239,16 @@ public class DialogueSystem : MonoBehaviour
 
             characterCount++;
 
-            // 播放打字音效
+            // Play typing sound
             if (typeSound != null && characterCount % soundFrequency == 0)
             {
                 PlayTypingSound(typeSound);
             }
 
-            // 基础等待时间
+            // Base wait time
             float waitTime = speed;
 
-            // 标点符号额外停顿
+            // Extra pause for punctuation
             if (punctuationMarks.Contains(c.ToString()))
             {
                 waitTime += punctuationPause;
@@ -271,12 +261,9 @@ public class DialogueSystem : MonoBehaviour
         ShowContinuePrompt(true);
 
         if (showDebugLog)
-            Debug.Log("[DialogueSystem] 打字完成");
+            Debug.Log("[DialogueSystem] Typing complete");
     }
 
-    /// <summary>
-    /// 播放打字音效（带音调变化）
-    /// </summary>
     void PlayTypingSound(AudioClip clip)
     {
         if (typeSoundSource == null || clip == null) return;
@@ -284,15 +271,12 @@ public class DialogueSystem : MonoBehaviour
         typeSoundSource.clip = clip;
         typeSoundSource.volume = typeSoundVolume;
 
-        // 随机音调变化
+        // Random pitch variation
         typeSoundSource.pitch = 1f + UnityEngine.Random.Range(-pitchVariation, pitchVariation);
 
         typeSoundSource.PlayOneShot(clip);
     }
 
-    /// <summary>
-    /// 播放普通音效
-    /// </summary>
     void PlaySound(AudioClip clip, AudioSource source)
     {
         if (clip == null || source == null) return;
@@ -300,18 +284,12 @@ public class DialogueSystem : MonoBehaviour
         source.PlayOneShot(clip);
     }
 
-    /// <summary>
-    /// 显示/隐藏继续提示
-    /// </summary>
     void ShowContinuePrompt(bool show)
     {
         if (continuePrompt != null)
             continuePrompt.SetActive(show);
     }
 
-    /// <summary>
-    /// 跳过打字效果
-    /// </summary>
     void CompleteTyping()
     {
         if (typeCoroutine != null)
@@ -320,11 +298,11 @@ public class DialogueSystem : MonoBehaviour
             typeCoroutine = null;
         }
 
-        // 停止打字音效
+        // Stop typing sound
         if (typeSoundSource != null)
             typeSoundSource.Stop();
 
-        // 立即显示完整文本
+        // Display full text immediately
         if (currentDialogue != null && currentLineIndex < currentDialogue.lines.Length)
         {
             if (dialogueText != null)
@@ -335,43 +313,37 @@ public class DialogueSystem : MonoBehaviour
         ShowContinuePrompt(true);
 
         if (showDebugLog)
-            Debug.Log("[DialogueSystem] 跳过打字效果");
+            Debug.Log("[DialogueSystem] Skipped typing effect");
     }
 
-    /// <summary>
-    /// 显示下一行
-    /// </summary>
     void ShowNextLine()
     {
         currentLineIndex++;
         ShowCurrentLine();
     }
 
-    /// <summary>
-    /// 结束对话
-    /// </summary>
     void EndDialogue()
     {
-        // 播放对话结束音效
+        // Play dialogue end sound
         PlaySound(dialogueEndSound, typeSoundSource);
 
-        // 停止所有音频
+        // Stop all audio
         if (voiceSource != null)
             voiceSource.Stop();
 
         if (musicSource != null)
             musicSource.Stop();
 
-        // 隐藏面板
+        // Hide panel
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
 
         ShowContinuePrompt(false);
 
         if (showDebugLog)
-            Debug.Log("[DialogueSystem] 对话结束");
+            Debug.Log("[DialogueSystem] Dialogue ended");
 
-        // 执行回调
+        // Execute callback
         onCompleteCallback?.Invoke();
         onCompleteCallback = null;
 
@@ -379,9 +351,6 @@ public class DialogueSystem : MonoBehaviour
         canProceed = false;
     }
 
-    /// <summary>
-    /// 强制停止对话
-    /// </summary>
     public void StopDialogue()
     {
         if (typeCoroutine != null)
@@ -393,9 +362,6 @@ public class DialogueSystem : MonoBehaviour
         EndDialogue();
     }
 
-    /// <summary>
-    /// 暂停/恢复对话
-    /// </summary>
     public void SetPaused(bool paused)
     {
         canProceed = !paused;
@@ -417,9 +383,6 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 获取当前对话进度
-    /// </summary>
     public float GetProgress()
     {
         if (currentDialogue == null || currentDialogue.lines.Length == 0)

@@ -5,56 +5,56 @@ using System.Collections;
 
 public class LevelPortalInteraction : MonoBehaviour
 {
-    [Header("===== 场景设置 =====")]
-    [Tooltip("下一个场景的名称")]
+    [Header("===== Scene Settings =====")]
+    [Tooltip("Name of the next scene")]
     public string nextSceneName = "Zone2";
 
-    [Header("===== 交互设置 =====")]
-    [Tooltip("交互按键")]
+    [Header("===== Interaction Settings =====")]
+    [Tooltip("Interaction key")]
     public KeyCode interactKey = KeyCode.E;
 
-    [Header("===== UI 提示 =====")]
-    [Tooltip("拖入提示文本对象")]
+    [Header("===== UI Prompt =====")]
+    [Tooltip("Drag in the prompt UI object")]
     public GameObject promptUI;
 
-    [Tooltip("提示文本组件 (可选,用于动态修改文字)")]
+    [Tooltip("Prompt text component (optional, for dynamic text)")]
     public TextMeshProUGUI promptText;
     public GameObject loadingCircle;
-    [Tooltip("提示内容")]
+    [Tooltip("Prompt message")]
     public string promptMessage = "Press E to interact.";
 
-    [Header("===== 可选设置 =====")]
-    [Tooltip("传送前的延迟时间")]
+    [Header("===== Optional Settings =====")]
+    [Tooltip("Delay before teleport")]
     public float teleportDelay = 0.3f;
 
-    [Tooltip("传送音效")]
+    [Tooltip("Teleport sound effect")]
     public AudioClip teleportSound;
 
-    [Header("===== 调试信息 =====")]
-    [Tooltip("显示调试日志")]
+    [Header("===== Debug Info =====")]
+    [Tooltip("Show debug logs")]
     public bool showDebugLogs = true;
 
-    // 私有变量
+    // Private variables
     private bool playerInRange = false;
     private bool isActivated = false;
     private AudioSource audioSource;
 
     void Start()
     {
-        // 初始化音效
+        // Initialize audio
         if (teleportSound != null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
         }
 
-        // 确保提示一开始是隐藏的
+        // Hide prompt UI initially
         if (promptUI != null)
         {
             promptUI.SetActive(false);
         }
 
-        // 设置提示文字
+        // Set prompt text
         if (promptText != null)
         {
             promptText.text = promptMessage;
@@ -62,22 +62,22 @@ public class LevelPortalInteraction : MonoBehaviour
 
         if (showDebugLogs)
         {
-            Debug.Log(" LevelPortalInteraction 已初始化\n" +
-                     "目标场景: {nextSceneName}\n" +
-                     "交互按键: {interactKey}");
+            Debug.Log("[Portal] LevelPortalInteraction initialized\n" +
+                     "Target scene: " + nextSceneName + "\n" +
+                     "Interact key: " + interactKey);
         }
     }
 
     void Update()
     {
-        
+        // Check for interaction input
         if (playerInRange && !isActivated)
         {
             if (Input.GetKeyDown(interactKey))
             {
                 if (showDebugLogs)
                 {
-                    Debug.Log(" 玩家按下 {interactKey} 键,准备传送!");
+                    Debug.Log("[Portal] Player pressed " + interactKey + " key, preparing to teleport!");
                 }
 
                 StartCoroutine(TeleportToNextLevel());
@@ -91,13 +91,13 @@ public class LevelPortalInteraction : MonoBehaviour
         {
             playerInRange = true;
 
-            // 显示提示
+            // Show prompt
             if (promptUI != null)
             {
                 promptUI.SetActive(true);
             }
 
-            // 显示加载圈
+            // Show loading circle
             if (loadingCircle != null)
             {
                 loadingCircle.SetActive(true);
@@ -105,26 +105,25 @@ public class LevelPortalInteraction : MonoBehaviour
 
             if (showDebugLogs)
             {
-                Debug.Log(" 玩家进入传送门范围,显示提示 UI");
+                Debug.Log("[Portal] Player entered portal range, showing prompt UI");
             }
         }
     }
 
-
-    // 玩家离开触发区域
+    // Player exits trigger area
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
 
-            // 隐藏提示
+            // Hide prompt
             if (promptUI != null)
             {
                 promptUI.SetActive(false);
             }
 
-            // 隐藏加载圈
+            // Hide loading circle
             if (loadingCircle != null)
             {
                 loadingCircle.SetActive(false);
@@ -132,53 +131,53 @@ public class LevelPortalInteraction : MonoBehaviour
 
             if (showDebugLogs)
             {
-                Debug.Log(" 玩家离开传送门范围,隐藏提示 UI");
+                Debug.Log("[Portal] Player left portal range, hiding prompt UI");
             }
         }
     }
 
-    // 传送协程
+    // Teleport coroutine
     IEnumerator TeleportToNextLevel()
     {
         isActivated = true;
 
-        // 隐藏提示
+        // Hide prompt
         if (promptUI != null)
         {
             promptUI.SetActive(false);
         }
-        // 隐藏加载圈
+        // Hide loading circle
         if (loadingCircle != null)
         {
             loadingCircle.SetActive(false);
         }
 
-        // 播放音效
+        // Play sound effect
         if (teleportSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(teleportSound);
         }
 
-        // 延迟
+        // Wait before teleporting
         if (teleportDelay > 0)
         {
             if (showDebugLogs)
             {
-                Debug.Log(" 等待 {teleportDelay} 秒后传送...");
+                Debug.Log("[Portal] Waiting " + teleportDelay + " seconds before teleporting...");
             }
             yield return new WaitForSeconds(teleportDelay);
         }
 
-        // 加载场景
+        // Load scene
         if (showDebugLogs)
         {
-            Debug.Log(" 正在加载场景: {nextSceneName}");
+            Debug.Log("[Portal] Loading scene: " + nextSceneName);
         }
 
         SceneManager.LoadScene(nextSceneName);
     }
 
-    
+    // Gizmo visualization
     void OnDrawGizmos()
     {
         Gizmos.color = new Color(0, 1, 0, 0.3f);

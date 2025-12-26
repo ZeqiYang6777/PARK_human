@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class LoadingCircleRotate : MonoBehaviour
 {
-    [Header("旋转设置")]
-    [Tooltip("旋转速度（度/秒）")]
+    [Header("Rotation Settings")]
+    [Tooltip("Rotation speed (degrees per second)")]
     public float rotationSpeed = 180f;
 
-    [Tooltip("旋转方向（-1 = 逆时针，1 = 顺时针）")]
+    [Tooltip("Rotation direction (-1 = counterclockwise, 1 = clockwise)")]
     public int rotationDirection = -1;
 
-    [Header("可选：脉冲效果")]
-    [Tooltip("启用缩放脉冲")]
+    [Header("Optional: Pulse Effect")]
+    [Tooltip("Enable scale pulse effect")]
     public bool enablePulse = true;
 
-    [Tooltip("脉冲速度")]
+    [Tooltip("Pulse speed")]
     public float pulseSpeed = 2f;
 
-    [Tooltip("最小缩放")]
+    [Tooltip("Minimum scale")]
     public float minScale = 0.9f;
 
-    [Tooltip("最大缩放")]
+    [Tooltip("Maximum scale")]
     public float maxScale = 1.1f;
 
     private RectTransform rectTransform;
@@ -34,11 +34,11 @@ public class LoadingCircleRotate : MonoBehaviour
 
     void Update()
     {
-        // 旋转动画
+        // Rotate the loading circle
         float rotation = rotationSpeed * rotationDirection * Time.deltaTime;
         rectTransform.Rotate(0, 0, rotation);
 
-        // 可选：脉冲缩放
+        // Apply pulse effect if enabled
         if (enablePulse)
         {
             pulseTimer += Time.deltaTime * pulseSpeed;

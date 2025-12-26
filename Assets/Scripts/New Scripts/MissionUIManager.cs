@@ -5,7 +5,7 @@ using System.Collections;
 
 public class MissionUIManager : MonoBehaviour
 {
-    [Header("=== UI 引用 ===")]
+    [Header("=== UI References ===")]
     public Button missionButton;
     public CanvasGroup missionButtonCanvasGroup;
     public GameObject missionListPanel;
@@ -14,10 +14,10 @@ public class MissionUIManager : MonoBehaviour
     public TextMeshProUGUI missionTitle;
     public TextMeshProUGUI missionDesc;
 
-    [Header("=== 设置 ===")]
+    [Header("=== Settings ===")]
     public KeyCode toggleKey = KeyCode.M;
 
-    [Header("=== 动画设置 ===")]
+    [Header("=== Animation Settings ===")]
     [Range(0.1f, 2f)]
     public float openDuration = 0.5f;
     [Range(0.1f, 2f)]
@@ -30,7 +30,7 @@ public class MissionUIManager : MonoBehaviour
     public AnimationCurve closeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public Vector2 closeOffset = new Vector2(400f, -300f);
 
-    [Header("=== 按钮动画设置 ===")]
+    [Header("=== Button Animation Settings ===")]
     public bool hideButtonOnOpen = true;
     [Range(0.1f, 1f)]
     public float buttonFadeOutDuration = 0.2f;
@@ -40,20 +40,19 @@ public class MissionUIManager : MonoBehaviour
     [Range(0f, 1f)]
     public float buttonShrinkScale = 0.5f;
 
-    [Header("=== 音效 ===")]
+    [Header("=== Audio ===")]
     public AudioSource uiAudioSource;
     public AudioClip openSound;
     public AudioClip closeSound;
 
-    // ✅ 新增：按钮音效
-    [Header("=== 按钮音效 ===")]
-    [Tooltip("按钮点击音效")]
+    [Header("=== Button Audio ===")]
+    [Tooltip("Button click sound effect")]
     public AudioClip buttonClickSound;
 
-    [Tooltip("按钮悬停音效（可选）")]
+    [Tooltip("Button hover sound effect (optional)")]
     public AudioClip buttonHoverSound;
 
-    [Tooltip("按钮音量")]
+    [Tooltip("Button sound volume")]
     [Range(0f, 1f)]
     public float buttonSoundVolume = 1f;
 
@@ -73,7 +72,6 @@ public class MissionUIManager : MonoBehaviour
 
         if (missionButton != null)
         {
-            // ✅ 添加点击音效
             missionButton.onClick.AddListener(PlayButtonClickSound);
             missionButton.onClick.AddListener(ToggleMissionList);
 
@@ -101,14 +99,14 @@ public class MissionUIManager : MonoBehaviour
             originalRotation = missionListRect.localRotation;
         }
 
-        // ✅ 确保音源存在
+        // Setup audio source
         if (uiAudioSource == null)
         {
             GameObject audioObj = new GameObject("UIAudioSource");
             audioObj.transform.SetParent(transform);
             uiAudioSource = audioObj.AddComponent<AudioSource>();
             uiAudioSource.playOnAwake = false;
-            uiAudioSource.spatialBlend = 0f; // 2D音效
+            uiAudioSource.spatialBlend = 0f; // 2D audio
         }
 
         HideAllUI();
@@ -120,14 +118,12 @@ public class MissionUIManager : MonoBehaviour
         {
             if (missionButton != null && missionButton.gameObject.activeSelf && !isAnimating)
             {
-                // ✅ 键盘按M键也播放音效
                 PlayButtonClickSound();
                 ToggleMissionList();
             }
         }
     }
 
-    // ✅ 新增：播放按钮点击音效
     void PlayButtonClickSound()
     {
         if (buttonClickSound != null && uiAudioSource != null)
@@ -135,14 +131,14 @@ public class MissionUIManager : MonoBehaviour
             uiAudioSource.volume = buttonSoundVolume;
             uiAudioSource.PlayOneShot(buttonClickSound);
 
-            Debug.Log("播放按钮点击音效"); // 调试用
+            Debug.Log("Playing button click sound");
         }
         else
         {
             if (buttonClickSound == null)
-                Debug.LogWarning("按钮点击音效未设置！");
+                Debug.LogWarning("Button click sound not set");
             if (uiAudioSource == null)
-                Debug.LogWarning("UI音频源未设置！");
+                Debug.LogWarning("UI audio source not set");
         }
     }
 
@@ -408,7 +404,7 @@ public class MissionUIManager : MonoBehaviour
         if (missionDesc != null)
             missionDesc.text = mission.description;
 
-        Debug.Log($"✓ UI 更新: {mission.missionTitle}");
+        Debug.Log("[OK] UI Update: " + mission.missionTitle);
     }
 
     void PlaySound(AudioClip clip)
