@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InteractableObject : MonoBehaviour
+public class Interactable_Animation : MonoBehaviour
 {
     [Header("Interaction Settings")]
     public KeyCode interactionKey = KeyCode.E;
@@ -11,21 +11,21 @@ public class InteractableObject : MonoBehaviour
 
     [Header("Animation Settings")]
     //public Animator targetAnimator;
-    public Animator[] targetAnimators;
-    public string animationTriggerName = "Play"; 
+    public Animation[] targetAnimations;
+    public string animationTriggerName = "Play";
 
     private bool playerInRange = false;
     private bool hasInteracted = false;
 
     void Start()
     {
-        
+
         if (eKeyPrompt != null)
         {
             eKeyPrompt.SetActive(false);
         }
 
-        
+
         //if (targetAnimator == null)
         //{
         //    targetAnimator = GetComponent<Animator>();
@@ -34,7 +34,7 @@ public class InteractableObject : MonoBehaviour
 
     void Update()
     {
-        
+
         if (playerInRange && !hasInteracted)
         {
             if (Input.GetKeyDown(interactionKey))
@@ -79,13 +79,13 @@ public class InteractableObject : MonoBehaviour
         Debug.Log("Player interacted with " + gameObject.name);
 
         // Play Animation
-        if (targetAnimators != null)
+        if (targetAnimations != null)
         {
-            foreach(var targetAnimator in targetAnimators)
+            foreach (var targetAnimation in targetAnimations)
             {
-                targetAnimator.enabled = true;
+                targetAnimation.Play();
             }
-            
+
             // timeline about the machine running process
             Debug.Log("Animation triggered: " + animationTriggerName);
         }
@@ -94,13 +94,13 @@ public class InteractableObject : MonoBehaviour
             Debug.LogWarning("Animator is not assigned on " + gameObject.name);
         }
 
-        
+
         if (eKeyPrompt != null)
         {
             eKeyPrompt.SetActive(false);
         }
 
-        
+
         if (interactOnce)
         {
             hasInteracted = true;
@@ -109,7 +109,7 @@ public class InteractableObject : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        
+
         Gizmos.color = new Color(0, 0, 1, 0.3f);
 
         BoxCollider boxCollider = GetComponent<BoxCollider>();

@@ -62407,7 +62407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4882e9a1cae1e78459a7afea58882100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10.15
+  MoveSpeed: 20
   SprintSpeed: 6
   RotationSpeed: 1
   SpeedChangeRate: 10
@@ -68119,7 +68119,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 99010a46f9c3d7047aaef6150ca3e108, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!4 &546388154 stripped
@@ -76302,7 +76302,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 8df614e6623ecfb4798eb86ba3f26b40, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1001 &619460090
@@ -135069,7 +135069,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: e75fc764c613c2c418a5f7fc703461d7, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1001 &1127565918
@@ -136007,7 +136007,7 @@ MonoBehaviour:
   interactionKey: 101
   interactOnce: 1
   eKeyPrompt: {fileID: 917553269}
-  targetAnimator: {fileID: 236010922}
+  targetAnimators: []
   animationTriggerName: Play
 --- !u!1001 &1135807372
 PrefabInstance:
@@ -162429,7 +162429,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 35e96629e07382f4f83bd1f0eb5091b0, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1001 &1290958164
@@ -162937,7 +162937,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 508a47bf5a6222f4ba6a77ca77cbcc34, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1001 &1293027314
@@ -171147,6 +171147,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1467819429}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e4645b781954e104cacd84350b3c9a5a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1467819430}
   m_SourcePrefab: {fileID: 100100000, guid: e4645b781954e104cacd84350b3c9a5a, type: 3}
 --- !u!1001 &1366338800
 PrefabInstance:
@@ -179391,7 +179395,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 4e78513481c80f946ac8a2082c89f560, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1001 &1438510123
@@ -183881,12 +183885,37 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 12.13, y: 33.9, z: 9.5}
-  m_Center: {x: 2.85, y: 19.84, z: -35.81}
+  m_Size: {x: 12.13, y: 33.9, z: 21.38282}
+  m_Center: {x: 2.8499992, y: 19.84, z: -29.868584}
+--- !u!114 &1467819430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467819427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 162ce4aafef0012408f7b8eb27cfdab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionKey: 101
+  interactOnce: 1
+  eKeyPrompt: {fileID: 917553269}
+  targetAnimations:
+  - {fileID: 618670375}
+  - {fileID: 1667562070}
+  - {fileID: 1517129208}
+  - {fileID: 1292811855}
+  - {fileID: 1290865037}
+  - {fileID: 1126210435}
+  - {fileID: 545717849}
+  - {fileID: 1438292108}
+  animationTriggerName: Play
 --- !u!1001 &1468378643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190662,7 +190691,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: edc7b07bef774c344b43723e2c79ca9b, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!4 &1517676425 stripped
@@ -209640,7 +209669,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: d63146cf9dd4ad047aa2f3aaebd5bac1, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1001 &1668733757
@@ -211459,8 +211488,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 13.55, y: 30.49, z: 16}
-  m_Center: {x: 3.7, y: 20.41, z: -32.42}
+  m_Size: {x: 13.55, y: 30.490004, z: 20.361544}
+  m_Center: {x: 3.7, y: 20.41, z: -30.239246}
 --- !u!114 &1683390224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211476,7 +211505,7 @@ MonoBehaviour:
   interactionKey: 101
   interactOnce: 1
   eKeyPrompt: {fileID: 917553269}
-  targetAnimator: {fileID: 412506800}
+  targetAnimators: []
   animationTriggerName: Play
 --- !u!1001 &1685117107
 PrefabInstance:
@@ -230825,7 +230854,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1800783071}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b706dbc5996653244a7b415a9766db88, type: 3}
   m_Name: 
@@ -252809,7 +252838,7 @@ Transform:
   m_Children:
   - {fileID: 1496256196}
   m_Father: {fileID: 1735908783}
-  m_LocalEulerAnglesHint: {x: 8.851, y: 177.064, z: 7.11}
+  m_LocalEulerAnglesHint: {x: 138.13791, y: 177.064, z: 7.11}
 --- !u!111 &1953396173
 Animation:
   m_ObjectHideFlags: 0
@@ -252824,6 +252853,7 @@ Animation:
   - {fileID: 7400000, guid: 219858898a811ca49b4652ee5dcb3564, type: 2}
   - {fileID: 0}
   - {fileID: 7400000, guid: 0bd314b738f8bed43bec45e7ff4c226b, type: 2}
+  - {fileID: 7400000, guid: 9cc854941cfd6174796e06e359b6e37a, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
