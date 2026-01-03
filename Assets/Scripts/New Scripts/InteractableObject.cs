@@ -7,11 +7,10 @@ public class InteractableObject : MonoBehaviour
     public bool interactOnce = true;
 
     [Header("UI Settings")]
-    public GameObject eKeyPrompt;
+    public GameObject eKeyPrompt; 
 
     [Header("Animation Settings")]
-    //public Animator targetAnimator;
-    public Animator[] targetAnimators;
+    public Animator targetAnimator;
     public string animationTriggerName = "Play"; 
 
     private bool playerInRange = false;
@@ -26,10 +25,10 @@ public class InteractableObject : MonoBehaviour
         }
 
         
-        //if (targetAnimator == null)
-        //{
-        //    targetAnimator = GetComponent<Animator>();
-        //}
+        if (targetAnimator == null)
+        {
+            targetAnimator = GetComponent<Animator>();
+        }
     }
 
     void Update()
@@ -50,7 +49,7 @@ public class InteractableObject : MonoBehaviour
         {
             playerInRange = true;
 
-            //  "E" 
+            
             if (eKeyPrompt != null && !hasInteracted)
             {
                 eKeyPrompt.SetActive(true);
@@ -66,7 +65,7 @@ public class InteractableObject : MonoBehaviour
         {
             playerInRange = false;
 
-            // Òþ²Ø E ¼üÌáÊ¾
+            
             if (eKeyPrompt != null)
             {
                 eKeyPrompt.SetActive(false);
@@ -78,15 +77,10 @@ public class InteractableObject : MonoBehaviour
     {
         Debug.Log("Player interacted with " + gameObject.name);
 
-        // Play Animation
-        if (targetAnimators != null)
+        // Player Animation
+        if (targetAnimator != null)
         {
-            foreach(var targetAnimator in targetAnimators)
-            {
-                targetAnimator.enabled = true;
-            }
-            
-            // timeline about the machine running process
+            targetAnimator.SetTrigger(animationTriggerName);
             Debug.Log("Animation triggered: " + animationTriggerName);
         }
         else
@@ -100,7 +94,7 @@ public class InteractableObject : MonoBehaviour
             eKeyPrompt.SetActive(false);
         }
 
-        
+       
         if (interactOnce)
         {
             hasInteracted = true;
